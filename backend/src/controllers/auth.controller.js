@@ -56,6 +56,7 @@ export const signup = async (req, res) => {
     res.status(500).json({ status: "fail", message: "Server error" });
   }
 };
+
 export const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -98,6 +99,7 @@ export const login = async (req, res) => {
     return res.status(500).json({ status: "fail", message: "Server error" });
   }
 };
+
 export const logout = (req, res) => {
   try {
     res.cookie("jwt", "", { maxAge: 0 });
@@ -110,6 +112,7 @@ export const logout = (req, res) => {
     res.status(500).json({ status: "fail", message: "Server error" });
   }
 };
+
 export const updateProfile = async (req, res) => {
   try {
     const { profilePic } = req.body;
@@ -136,4 +139,12 @@ export const updateProfile = async (req, res) => {
       },
     });
   } catch (err) {}
+};
+
+export const checkAuth = async (req, res, next) => {
+  try {
+    res.status(200).json({ status: "success", data: req.user });
+  } catch (err) {
+    res.status(500).json({ status: "fail", message: "Server error" });
+  }
 };
