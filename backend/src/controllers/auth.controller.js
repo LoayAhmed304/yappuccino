@@ -38,21 +38,74 @@ export const signup = async (req, res) => {
       await newUser.save();
 
       res.status(201).json({
-        _id: newUser._id,
-        fullName: newUser.fullName,
-        email: newUser.email,
-        profilePic: newUser.profilePic,
+        status: "success",
+        data: {
+          _id: newUser._id,
+          fullName: newUser.fullName,
+          email: newUser.email,
+          profilePic: newUser.profilePic,
+        },
       });
     } else {
       res.status(400).json({ status: "fail", message: "Failed to create" });
     }
   } catch {
+    console.log("ERROR:", err);
+
     res.status(500).json({ status: "fail", message: "Server error" });
   }
 };
-export const login = (req, res) => {
-  res.send("login");
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res
+      .status(400)
+      .json({ status: "fail", message: "All fields are required" });
+  }
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Invalid credentials",
+      });
+    }
+
+    const isCorrect = await bcrypt.compare(password, user.password);
+    if (!isCorrect) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Invalid credentials",
+      });
+    }
+
+    generateToken(user._id, res);
+
+    return res.status(200).json({
+      status: "success",
+      data: {
+        _id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        profilePic: user.profilePic,
+      },
+    });
+  } catch (err) {
+    console.log("ERROR:", err);
+
+    return res.status(500).json({ status: "fail", message: "Server error" });
+  }
 };
 export const logout = (req, res) => {
-  res.send("logout");
+  try {
+    res.cookie("jwt", "", { maxAge: 0 });
+    return res.status(200).json({
+      status: "success",
+      message: "Logged out successfully",
+    });
+  } catch (err) {
+    console.log("ERROR:", err);
+    res.status(500).json({ status: "fail", message: "Server error" });
+  }
 };
