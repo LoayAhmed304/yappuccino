@@ -1,8 +1,15 @@
 import React from "react";
 import { useAuthStore } from "../stores/useAuthStore.js";
-import { MessageSquare, User, Mail, Lock, EyeOff, Eye } from "lucide-react";
+import {
+  MessageSquare,
+  User,
+  Mail,
+  Lock,
+  EyeOff,
+  Eye,
+  Loader2,
+} from "lucide-react";
 import AuthImagePattern from "../components/AuthImagePattern.jsx";
-import { Loader2 } from "lucide-react";
 import { toast } from "react-hot-toast";
 
 const SignUpPage = () => {
