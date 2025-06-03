@@ -106,7 +106,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const logout = (res: Response): void => {
+export const logout = (req: Request, res: Response): void => {
   try {
     res.cookie("jwt", "", { maxAge: 0 });
     res.status(200).json({
@@ -115,7 +115,7 @@ export const logout = (res: Response): void => {
     });
   } catch (err) {
     console.log("ERROR:", err);
-    res.status(500).json({ status: "fail", message: "Server error" });
+    res.status(500).json({ status: "fail", message: "Server error" + err });
   }
 };
 
