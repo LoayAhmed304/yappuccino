@@ -27,7 +27,6 @@ export const protect = async (
       res.status(401).json({ status: "fail", mesage: "Invalid" });
       return;
     }
-    console.log("Decoded token:", decoded);
     if (!decoded.userId) {
       res.status(401).json({ status: "fail", message: "Invalid token, not userId" });
       

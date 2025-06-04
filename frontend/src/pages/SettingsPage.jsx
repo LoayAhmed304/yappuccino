@@ -2,8 +2,8 @@ import React from 'react'
 
 const SettingsPage = () => {
   return (
-    <div>
-      Settings
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-6xl text-center">To be implemented soon</h1>
     </div>
   )
 }

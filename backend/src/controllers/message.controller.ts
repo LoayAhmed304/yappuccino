@@ -17,10 +17,10 @@ export const getSidebarUsers = async (req: Request, res: Response) => {
     const filteredUsers = await User.find({
       _id: { $ne: loggedInUser },
     }).select("-password");
-
+    console.log("FILTERED USERS: ", filteredUsers);
     res.status(200).json({
       status: "success",
-      data: { ...filteredUsers },
+      data: filteredUsers,
     });
   } catch (err) {
     console.log(err);
