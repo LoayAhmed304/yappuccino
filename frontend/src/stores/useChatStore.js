@@ -27,7 +27,7 @@ export const useChatStore = create((set, get) => ({
     set({ isMessagesLoading: true });
     try {
       const res = await axiosInstance.get(`/message/${userId}`);
-      set({ messages: res.data.data, selectedUser: userId });
+      set({ messages: res.data.data.messages || [] });
     } catch (error) {
       toast.error(error.response?.data?.message);
     } finally {
@@ -36,5 +36,22 @@ export const useChatStore = create((set, get) => ({
   },
   setSelectedUser: (userId) => {
     set({ selectedUser: userId });
+  },
+  sendMessage: async (messageData) => {
+    const { messages, selectedUser } = get();
+    try {
+      const response = await axiosInstance.post(
+        `/message/send/${selectedUser._id}`,
+        messageData
+      );
+      const currentMessages = Array.isArray(messages) ? messages : [];
+      console.log(currentMessages);
+      set({
+        messages: [...currentMessages, response.data.data.newMessage],
+      });
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.message || "Failed to send message.");
+    }
   },
 }));
