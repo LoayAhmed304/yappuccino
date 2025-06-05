@@ -3,6 +3,7 @@ import cloudinary from "../lib/cloudinary.js";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
 import { Request, Response } from "express";
+import { getReceiverSocketId, io } from "../lib/socket.js";
 
 export const getSidebarUsers = async (req: Request, res: Response) => {
   try {
@@ -87,8 +88,15 @@ export const sendMessage = async (req: Request, res: Response) => {
     await newMessage.save();
 
     // socket.io is here:
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    console.log(`Receiver Socket ID: ${receiverSocketId}`);
+    if (receiverSocketId) {
+      // Emit the new message to the receiver
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    } else {
+      console.log(`No socket found for receiver ID: ${receiverId}`);
+    }
 
-    ////////
     res.status(201).json({
       status: "success",
       data: { newMessage },

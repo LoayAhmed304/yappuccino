@@ -6,16 +6,35 @@ import MessageSkeleton from "./skeletons/MessageSkeleton";
 import { useAuthStore } from "../stores/useAuthStore";
 
 const ChatContainer = () => {
-  const { selectedUser, isMessagesLoading, messages, getMessages } =
-    useChatStore();
+  const {
+    selectedUser,
+    isMessagesLoading,
+    messages,
+    getMessages,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  } = useChatStore();
   const { authUser } = useAuthStore();
+  const messageEndRef = React.useRef(null);
 
   React.useEffect(() => {
     if (selectedUser) {
       getMessages(selectedUser._id);
+      subscribeToMessages();
     }
-    console.log("current", authUser);
-  }, [selectedUser, getMessages]);
+    return () => unsubscribeFromMessages();
+  }, [
+    selectedUser,
+    getMessages,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+    authUser,
+  ]);
+
+  React.useEffect(() => {
+    if (messageEndRef.current && messages.length > 0)
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   if (isMessagesLoading) {
     return (
@@ -37,6 +56,7 @@ const ChatContainer = () => {
             className={`chat ${
               message.senderId === authUser._id ? "chat-end" : "chat-start"
             }`}
+            ref={messageEndRef}
           >
             <div className="chat-image avatar">
               <div className="size-10 rounded-full border">

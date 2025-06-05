@@ -17,7 +17,7 @@ const ChatHeader = () => {
       <div className="flex flex-col">
         <span className="font-medium">{selectedUser?.fullName}</span>
         <span className="text-sm text-zinc-400">
-          {onlineUsers.includes(selectedUser) ? "Online" : "Offline"}
+          {onlineUsers.includes(selectedUser._id) ? "Online" : "Offline"}
         </span>
       </div>
       {/* Close Button */}
