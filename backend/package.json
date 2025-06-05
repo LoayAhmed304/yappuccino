@@ -24,7 +24,8 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.1",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "yappuccino": "file:.."
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.8",
