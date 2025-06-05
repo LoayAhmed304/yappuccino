@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import cloudinary from "../lib/cloudinary.js";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
@@ -17,7 +18,6 @@ export const getSidebarUsers = async (req: Request, res: Response) => {
     const filteredUsers = await User.find({
       _id: { $ne: loggedInUser },
     }).select("-password");
-    console.log("FILTERED USERS: ", filteredUsers);
     res.status(200).json({
       status: "success",
       data: filteredUsers,
@@ -33,8 +33,11 @@ export const getSidebarUsers = async (req: Request, res: Response) => {
 
 export const getMessages = async (req: Request, res: Response) => {
   try {
-    const { id: him } = req.params;
+    const { id: himString } = req.params;
     const me = req.user?._id;
+
+    // Convert string ID to ObjectId for proper comparison
+    const him = new ObjectId(himString);
 
     if (!me) {
       res.status(401).json({
@@ -46,7 +49,7 @@ export const getMessages = async (req: Request, res: Response) => {
 
     const messages = await Message.find({
       $or: [
-        { senderId: me, receverId: him },
+        { senderId: me, receiverId: him },
         { senderId: him, receiverId: me },
       ],
     });
