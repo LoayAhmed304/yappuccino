@@ -12,7 +12,7 @@ const iceServers = [
   { urls: "stun:stun1.l.google.com:3478" },
 ];
 
-const SIG_URL = "http://localhost:3000";
+const SIG_URL = import.meta.env.VITE_SIGNALING_URL || "http://localhost:3535";
 export const useChatStore = create((set, get) => ({
   messages: [],
   users: [],

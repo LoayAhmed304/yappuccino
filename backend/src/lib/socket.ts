@@ -1,13 +1,15 @@
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const serverHttp = http.createServer(app);
 
 const io = new Server(serverHttp, {
   cors: {
-    origin: ["http://localhost:5173"],
+    origin: [process.env.FRONTEND_URL ?? "http://localhost:5173"],
   },
 });
 
