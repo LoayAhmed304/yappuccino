@@ -5,7 +5,6 @@ import messageRoutes from "./routes/message.route.js";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import path from "path";
 import "./lib/webRTCSignaling.js";
 import { app, serverHttp } from "./lib/socket.js";
 dotenv.config();

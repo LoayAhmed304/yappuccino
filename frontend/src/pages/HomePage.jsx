@@ -2,7 +2,6 @@ import { useChatStore } from "../stores/useChatStore";
 import Sidebar from "../components/Sidebar";
 import NoChatSelected from "../components/NoChatSelected";
 import ChatContainer from "../components/ChatContainer";
-import { PhoneCall } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import CallPopup from "../components/CallPopup";
 import RingingPopup from "../components/RingingPopup";

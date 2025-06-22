@@ -1,7 +1,5 @@
 import { useEffect } from "react";
-import { openMediaDevices } from "../lib/utils.js"; // Assuming you have a utility to get user media
 import { useChatStore } from "../stores/useChatStore";
-import { useAuthStore } from "../stores/useAuthStore.js";
 
 const CallPage = ({ fullName, profilePic, voice }) => {
   const { peerConnection, cleanupCall, localStream, remoteStream } =

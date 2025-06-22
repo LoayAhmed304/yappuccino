@@ -1,4 +1,3 @@
-import React from "react";
 import { useAuthStore } from "../stores/useAuthStore.js";
 import { Link } from "react-router-dom";
 import { LogOut, Coffee, Settings, User } from "lucide-react";

@@ -4,7 +4,6 @@ import { axiosInstance } from "../lib/axios";
 import { useAuthStore } from "./useAuthStore";
 import { io } from "socket.io-client";
 import { openMediaDevices } from "../lib/utils";
-import { useNavigate } from "react-router-dom";
 
 const iceServers = [
   { urls: "stun:stun.l.google.com:19302" },

@@ -1,4 +1,3 @@
-import React from "react";
 import { PhoneCall } from "lucide-react";
 import { useChatStore } from "../stores/useChatStore";
 const RingingPopup = () => {

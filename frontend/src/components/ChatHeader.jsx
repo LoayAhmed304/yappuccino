@@ -1,4 +1,3 @@
-import React from "react";
 import { useChatStore } from "../stores/useChatStore";
 import { useAuthStore } from "../stores/useAuthStore";
 import { X, Phone, Video } from "lucide-react";
