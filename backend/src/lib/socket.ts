@@ -18,7 +18,6 @@ export function getReceiverSocketId(userId: string): string | undefined {
 }
 
 io.on("connection", (socket) => {
-  console.log(`User connected with socket: ${socket.id}`);
   if (!socket.handshake.query.userId) {
     console.error("User ID not provided in handshake query");
     return;
@@ -29,7 +28,6 @@ io.on("connection", (socket) => {
   io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
 
   socket.on("disconnect", () => {
-    console.log(`User disconnected: ${socket.id}`);
     userSocketMap.delete(userId);
     io.emit("getOnlineUsers", Array.from(Object.keys(userSocketMap)));
   });

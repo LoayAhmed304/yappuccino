@@ -19,11 +19,9 @@ io.on("connection", (socket) => {
 
   const userId: string = socket.handshake.query.userId as string;
 
-  console.log("[SIG] Socket connected, room: ", userId);
   socket.join(userId);
 
   socket.on("offer", ({ offer, target, caller }) => {
-    console.log("[SIG] emitting to room: ", target);
     socket.to(target).emit("offer", { offer, caller });
   });
 
