@@ -27,19 +27,22 @@ const ChatHeader = () => {
         </span>
       </div>
       <div className="ml-auto flex justify-between gap-10">
-        {/* Call button */}
-        <button
-          onClick={(e) => handleCall(e, false)}
-          className="text-primary hover:text-success"
-        >
-          <Video className="w-7 h-7" />
-        </button>
-        <button
-          onClick={(e) => handleCall(e, true)}
-          className="text-primary hover:text-success"
-        >
-          <Phone />
-        </button>
+        {onlineUsers.includes(selectedUser._id) && (
+          <button
+            onClick={(e) => handleCall(e, false)}
+            className="text-primary hover:text-success"
+          >
+            <Video className="w-7 h-7" />
+          </button>
+        )}
+        {onlineUsers.includes(selectedUser._id) && (
+          <button
+            onClick={(e) => handleCall(e, true)}
+            className="text-primary hover:text-success"
+          >
+            <Phone />
+          </button>
+        )}
 
         {/* Close Button */}
         <button
