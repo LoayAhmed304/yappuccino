@@ -334,6 +334,10 @@ export const useChatStore = create((set, get) => ({
       });
     }
     get().peerConnection?.close();
+    const localStream = get().localStream;
+    if (localStream) {
+      localStream.getTracks().forEach((track) => track.stop());
+    }
     set({
       peerConnection: null,
       remoteStream: null,
