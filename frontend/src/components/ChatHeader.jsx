@@ -1,11 +1,17 @@
 import React from "react";
 import { useChatStore } from "../stores/useChatStore";
 import { useAuthStore } from "../stores/useAuthStore";
-import { X } from "lucide-react";
+import { X, Phone, Video } from "lucide-react";
 
 const ChatHeader = () => {
-  const { selectedUser, setSelectedUser } = useChatStore();
+  const { selectedUser, setSelectedUser, makeCall } = useChatStore();
   const { onlineUsers } = useAuthStore();
+
+  const handleCall = async (e, voice) => {
+    e.preventDefault();
+    console.log("E TARGET:", e);
+    makeCall(voice);
+  };
 
   return (
     <div className="border-b border-base-300 p-2 flex items-center gap-3">
@@ -20,15 +26,31 @@ const ChatHeader = () => {
           {onlineUsers.includes(selectedUser._id) ? "Online" : "Offline"}
         </span>
       </div>
-      {/* Close Button */}
-      <button
-        onClick={() => {
-          setSelectedUser(null);
-        }}
-        className="ml-auto text-zinc-500 hover:text-zinc-700 transition-colors"
-      >
-        <X />
-      </button>
+      <div className="ml-auto flex justify-between gap-10">
+        {/* Call button */}
+        <button
+          onClick={(e) => handleCall(e, false)}
+          className="text-primary hover:text-success"
+        >
+          <Video className="w-7 h-7" />
+        </button>
+        <button
+          onClick={(e) => handleCall(e, true)}
+          className="text-primary hover:text-success"
+        >
+          <Phone />
+        </button>
+
+        {/* Close Button */}
+        <button
+          onClick={() => {
+            setSelectedUser(null);
+          }}
+          className="text-error/40 hover:text-error transition-colors"
+        >
+          <X />
+        </button>
+      </div>
     </div>
   );
 };

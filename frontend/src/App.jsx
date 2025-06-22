@@ -10,13 +10,18 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import { useAuthStore } from "./stores/useAuthStore.js";
 import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";
+import { useChatStore } from "./stores/useChatStore.js";
+import CallPage from "./pages/CallPage.jsx";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { caller, inCall, voiceChat } = useChatStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  useEffect(() => {}, [inCall]);
 
   if (isCheckingAuth && !authUser) {
     return (
@@ -25,6 +30,7 @@ const App = () => {
       </div>
     );
   }
+
   return (
     <div>
       <Navbar />
@@ -45,6 +51,20 @@ const App = () => {
         <Route
           path="/profile"
           element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/call"
+          element={
+            inCall ? (
+              <CallPage
+                fullName={caller?.fullName}
+                profilePic={caller?.profilePic}
+                voice={voiceChat}
+              />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         />
       </Routes>
       <Toaster />

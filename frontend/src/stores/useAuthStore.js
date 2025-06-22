@@ -2,9 +2,9 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import { toast } from "react-hot-toast";
 import { io } from "socket.io-client";
+import { useChatStore } from "./useChatStore";
 
-const BASE_URL =
-  import.meta.env.MODE === "development" ? "http://localhost:3535/api" : "/api";
+const BASE_URL = "http://localhost:3535";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -22,6 +22,7 @@ export const useAuthStore = create((set, get) => ({
       });
 
       get().connectToSocket();
+      useChatStore.getState().connectToSocket();
     } catch (err) {
       console.error("Error checking auth:", err);
       set({
@@ -45,6 +46,7 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Account created successfully!");
 
       get().connectToSocket();
+      useChatStore.getState().connectToSocket();
     } catch (err) {
       console.error("Error signing up:", err);
       toast.error(err.response?.data?.message || "Failed to create account.");
@@ -73,9 +75,11 @@ export const useAuthStore = create((set, get) => ({
       set({
         authUser: response.data.data,
       });
+      console.log("here before connect");
       toast.success("Logged in successfully!");
 
       get().connectToSocket();
+      useChatStore.getState().connectToSocket();
     } catch (err) {
       console.error("Error logging in:", err);
       toast.error(err.response?.data?.message || "Failed to log in.");
@@ -111,6 +115,7 @@ export const useAuthStore = create((set, get) => ({
     const socket = io(BASE_URL, { query: { userId: authUser._id } });
     socket.connect();
     set({ socket: socket });
+    toast.success("Socket:", socket);
 
     socket.on("getOnlineUsers", (users) => {
       console.log("Online users received:", users);

@@ -18,7 +18,7 @@ export function getReceiverSocketId(userId: string): string | undefined {
 }
 
 io.on("connection", (socket) => {
-  console.log(`User connected: ${socket.id}`);
+  console.log(`User connected with socket: ${socket.id}`);
   if (!socket.handshake.query.userId) {
     console.error("User ID not provided in handshake query");
     return;
