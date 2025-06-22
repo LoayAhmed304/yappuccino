@@ -9,7 +9,6 @@ const ChatHeader = () => {
 
   const handleCall = async (e, voice) => {
     e.preventDefault();
-    console.log("E TARGET:", e);
     makeCall(voice);
   };
 

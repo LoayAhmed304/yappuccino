@@ -33,7 +33,6 @@ export const useChatStore = create((set, get) => ({
     set({ isUsersLoading: true });
     try {
       const res = await axiosInstance.get("/message/user");
-      console.log(res.data.data);
       set({ users: res.data.data });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -66,7 +65,6 @@ export const useChatStore = create((set, get) => ({
         messageData
       );
       const currentMessages = Array.isArray(messages) ? messages : [];
-      console.log(currentMessages);
       set({
         messages: [...currentMessages, response.data.data.newMessage],
       });
@@ -96,7 +94,6 @@ export const useChatStore = create((set, get) => ({
   initPeerConnection: () => {
     const pc = new RTCPeerConnection({ iceServers: iceServers });
     pc.onicecandidate = (event) => {
-      console.log("ICE candidate event:", event);
       if (event.candidate) {
         const ss = get().signalingSocket;
         ss.emit("ice-candidate", {
@@ -111,7 +108,6 @@ export const useChatStore = create((set, get) => ({
       event.streams[0].getTracks().forEach((track) => {
         remoteStream.addTrack(track);
       });
-      console.log("Remote stream received:", remoteStream);
     };
 
     pc.onconnectionstatechange = () => {
@@ -164,7 +160,6 @@ export const useChatStore = create((set, get) => ({
       }
       const localStream = await openMediaDevices(config);
       set({ localStream });
-      console.log("Local stream obtained:", localStream);
 
       const pc = get().peerConnection;
       if (pc) {
@@ -207,7 +202,7 @@ export const useChatStore = create((set, get) => ({
   connectToSocket: () => {
     const { authUser } = useAuthStore.getState();
     if (!authUser || get().signalingSocket?.connected) {
-      console.log(
+      console.error(
         "Cannot connect to socket, no authenticated user or already connected."
       );
       return;
@@ -269,11 +264,9 @@ export const useChatStore = create((set, get) => ({
 
       await pc.setRemoteDescription(new RTCSessionDescription(answer));
       set({ inCall: true, isCalling: false, caller: get().selectedUser });
-      console.log("Call answered!, inCall", get().inCall);
     });
 
     set({ signalingSocket: ss });
-    toast.success("[SIG] Socket:", ss);
   },
 
   handleAccept: async () => {

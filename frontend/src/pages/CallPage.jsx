@@ -13,7 +13,6 @@ const CallPage = ({ fullName, profilePic, voice }) => {
   };
   useEffect(() => {
     return () => {
-      console.log("Cleaning up CallPage component");
       cleanupCall();
     };
   }, []);
@@ -24,17 +23,12 @@ const CallPage = ({ fullName, profilePic, voice }) => {
 
     const remoteElement = document.getElementById("remoteElement");
     if (remoteElement && remoteStream) remoteElement.srcObject = remoteStream;
-
-    console.log("Local stream updated:", localStream.getTracks());
-    console.log("Remote stream updated:", remoteStream.getTracks());
-    console.log("remoteStream: ", remoteStream);
   }, [localStream, remoteStream]);
 
   useEffect(() => {
     if (!peerConnection) {
       cleanupCall();
       console.error("Peer connection is not established. Cleaning up call.");
-      return;
     }
   }, [peerConnection]);
 

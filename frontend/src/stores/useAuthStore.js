@@ -37,7 +37,6 @@ export const useAuthStore = create((set, get) => ({
 
   signup: async (data) => {
     set({ isSigningUp: true });
-    console.log("Signing up with data:", data);
     try {
       const response = await axiosInstance.post("/auth/signup", data);
       set({
@@ -69,13 +68,11 @@ export const useAuthStore = create((set, get) => ({
 
   login: async (data) => {
     set({ isLoggingIn: true });
-    console.log("Logging in with data:", data);
     try {
       const response = await axiosInstance.post("/auth/login", data);
       set({
         authUser: response.data.data,
       });
-      console.log("here before connect");
       toast.success("Logged in successfully!");
 
       get().connectToSocket();
@@ -90,7 +87,6 @@ export const useAuthStore = create((set, get) => ({
 
   updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
-    console.log("Updating profile with data:", data);
     try {
       const response = await axiosInstance.put("/auth/update-profile", data);
       set({
@@ -115,10 +111,8 @@ export const useAuthStore = create((set, get) => ({
     const socket = io(BASE_URL, { query: { userId: authUser._id } });
     socket.connect();
     set({ socket: socket });
-    toast.success("Socket:", socket);
 
     socket.on("getOnlineUsers", (users) => {
-      console.log("Online users received:", users);
       set({ onlineUsers: users });
     });
   },
