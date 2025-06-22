@@ -13,6 +13,7 @@ const CallPage = ({ fullName, profilePic, voice }) => {
   };
   useEffect(() => {
     return () => {
+      console.log("Cleaning up CallPage component");
       cleanupCall();
     };
   }, []);
@@ -28,6 +29,14 @@ const CallPage = ({ fullName, profilePic, voice }) => {
     console.log("Remote stream updated:", remoteStream.getTracks());
     console.log("remoteStream: ", remoteStream);
   }, [localStream, remoteStream]);
+
+  useEffect(() => {
+    if (!peerConnection) {
+      cleanupCall();
+      console.error("Peer connection is not established. Cleaning up call.");
+      return;
+    }
+  }, [peerConnection]);
 
   return (
     <div className="h-screen bg-base-200 flex items-center justify-center">

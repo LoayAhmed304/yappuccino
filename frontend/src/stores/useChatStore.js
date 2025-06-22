@@ -114,6 +114,22 @@ export const useChatStore = create((set, get) => ({
       console.log("Remote stream received:", remoteStream);
     };
 
+    pc.onconnectionstatechange = () => {
+      const state = pc.connectionState;
+      if (["disconnected", "failed", "closed"].includes(state)) {
+        get().cleanupCall();
+        set({
+          peerConnection: null,
+          remoteStream: null,
+          localStream: null,
+          isRinging: false,
+          caller: null,
+          inCall: false,
+          isCalling: false,
+        });
+      }
+    };
+
     set({ peerConnection: pc, remoteStream });
   },
 
@@ -307,17 +323,16 @@ export const useChatStore = create((set, get) => ({
   },
 
   handleEndCall: () => {
+    get().cleanupCall();
+  },
+
+  cleanupCall: () => {
     const ss = get().signalingSocket;
     if (ss) {
       ss.emit("end-call", {
         target: get().caller?._id,
       });
     }
-    get().cleanupCall();
-    toast.success("Call ended successfully.");
-  },
-
-  cleanupCall: () => {
     get().peerConnection?.close();
     set({
       peerConnection: null,
