@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useChatStore } from "../stores/useChatStore";
+import { PhoneOff } from "lucide-react";
 
 const CallPage = ({ fullName, profilePic, voice }) => {
   const { peerConnection, cleanupCall, localStream, remoteStream } =
@@ -9,6 +10,7 @@ const CallPage = ({ fullName, profilePic, voice }) => {
     e.preventDefault();
     useChatStore.getState().handleEndCall();
   };
+
   useEffect(() => {
     return () => {
       cleanupCall();
@@ -31,40 +33,56 @@ const CallPage = ({ fullName, profilePic, voice }) => {
   }, [peerConnection]);
 
   return (
-    <div className="h-screen bg-base-200 flex items-center justify-center">
-      <div className="bg-base-100 p-5 rounded-lg shadow-lg text-center">
-        <h2 className="text-2xl font-semibold mb-3">Call in Progress</h2>
-        <img
-          src={profilePic || "avatar.png"}
-          className="w-60 h-60 mx-auto mb-5 rounded-full object-cover"
-          alt={`${fullName}'s profile`}
-        />
-        <p className="mb-4 text-lg">{fullName} is on the call!</p>
-        {/* Make the two video elements */}
-        <div className="flex justify-center gap-4 mb-4">
-          <video
-            id="localElement"
-            autoPlay
-            muted
-            className={
-              "w-60 h-60 rounded-lg border-2 border-primary" +
-              (voice ? " hidden" : "")
-            }
-          ></video>
-          <video
-            id="remoteElement"
-            autoPlay
-            className={
-              "w-60 h-60 rounded-lg border-2 border-secondary" +
-              (voice ? " hidden" : "")
-            }
-          ></video>
-        </div>
-        <div className="flex justify-center gap-4 mt-4">
-          <button className="btn btn-success" onClick={handleEndCall}>
-            End Call
+    <div className="w-full h-[calc(100vh-2rem)] flex items-center justify-center px-4 py-6 mt-5">
+      <div className="relative w-full max-w-6xl md:h-140 aspect-video bg-black rounded-lg shadow-lg overflow-clip flex items-center justify-center">
+        {/* Video Call */}
+
+        <video
+          id="remoteElement"
+          autoPlay
+          className={"w-full h-full object-cover" + (voice ? " hidden" : "")}
+        ></video>
+
+        <video
+          id="localElement"
+          autoPlay
+          muted
+          className={
+            "absolute bottom-4 right-4 w-32 h-20 sm:w-40 sm:h-24 md:w-52 md:h-32 rounded border-2 border-white shadow-md object-cover z-10" +
+            voice
+              ? " hidden"
+              : ""
+          }
+        ></video>
+
+        {/* Voice Call */}
+        {voice && (
+          <div className="flex flex-col items-center justify-center text-white space-y-4">
+            <img
+              src={profilePic}
+              alt={fullName}
+              className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white shadow-lg object-cover"
+            />
+            <p className="text-xl sm:text-2xl font-semibold">
+              Call with {fullName}
+            </p>
+          </div>
+        )}
+
+        <div className="absolute inset-0 flex justify-center items-end pb-4 opacity-0 hover:opacity-100 transition-opacity z-20">
+          <button
+            className="btn btn-error text-white shadow-lg"
+            onClick={handleEndCall}
+          >
+            <PhoneOff className="size-5 sm:size-6" />
           </button>
         </div>
+
+        {!voice && (
+          <div className="absolute top-3 left-4 text-white text-sm sm:text-base font-medium drop-shadow z-20">
+            Call with {fullName}
+          </div>
+        )}
       </div>
     </div>
   );
