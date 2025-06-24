@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     host: true,
-    port: import.meta.VITE_PORT || 5173,
+    port: import.meta.env.VITE_PORT || 5173,
     watch: {
       usePolling: true,
     },
