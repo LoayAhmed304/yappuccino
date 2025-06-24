@@ -35,25 +35,27 @@ const CallPage = ({ fullName, profilePic, voice }) => {
   return (
     <div className="w-full h-[calc(100vh-2rem)] flex items-center justify-center px-4 py-6 mt-5">
       <div className="relative w-full max-w-6xl md:h-140 aspect-video bg-black rounded-lg shadow-lg overflow-clip flex items-center justify-center">
-        {/* Video Call View */}
-        {!voice && (
-          <>
-            <video
-              id="remoteElement"
-              autoPlay
-              className="w-full h-full object-cover"
-            ></video>
+        {/* Video Call */}
 
-            <video
-              id="localElement"
-              autoPlay
-              muted
-              className="absolute bottom-4 right-4 w-32 h-20 sm:w-40 sm:h-24 md:w-52 md:h-32 rounded border-2 border-white shadow-md object-cover z-10"
-            ></video>
-          </>
-        )}
+        <video
+          id="remoteElement"
+          autoPlay
+          className={"w-full h-full object-cover" + (voice ? " hidden" : "")}
+        ></video>
 
-        {/* Voice Call View */}
+        <video
+          id="localElement"
+          autoPlay
+          muted
+          className={
+            "absolute bottom-4 right-4 w-32 h-20 sm:w-40 sm:h-24 md:w-52 md:h-32 rounded border-2 border-white shadow-md object-cover z-10" +
+            voice
+              ? " hidden"
+              : ""
+          }
+        ></video>
+
+        {/* Voice Call */}
         {voice && (
           <div className="flex flex-col items-center justify-center text-white space-y-4">
             <img
@@ -67,7 +69,6 @@ const CallPage = ({ fullName, profilePic, voice }) => {
           </div>
         )}
 
-        {/* End Call Button */}
         <div className="absolute inset-0 flex justify-center items-end pb-4 opacity-0 hover:opacity-100 transition-opacity z-20">
           <button
             className="btn btn-error text-white shadow-lg"
