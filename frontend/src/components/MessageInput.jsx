@@ -12,13 +12,12 @@ const MessageInput = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (!file) return; // Add this check to prevent errors if no file is selected
+    if (!file) return;
     if (!file.type.startsWith("image/")) {
       toast.error("Please select a valid image file.");
       return;
     }
 
-    // Consider adding file size check
     if (file.size > 5 * 1024 * 1024) {
       // 5MB limit example
       toast.error("Image too large. Please select an image under 5MB.");
@@ -30,7 +29,7 @@ const MessageInput = () => {
       setImagePreview(reader.result);
     };
     reader.readAsDataURL(file);
-    // Reset the file input for future uploads
+    // Reset the file input
     e.target.value = null;
   };
   const removeImage = () => {
@@ -50,11 +49,12 @@ const MessageInput = () => {
     }
 
     try {
+      const curText = text.trim();
+      setText("");
       await sendMessage({
-        text: text.trim(),
+        text: curText,
         image: imagePreview,
       });
-      setText("");
       setImagePreview(null);
       if (fileInputRef.current) fileInputRef.current.value = null;
     } catch (err) {
@@ -63,35 +63,42 @@ const MessageInput = () => {
       console.log("HELLO FROM CATCH");
     }
   };
-
   return (
-    <div className="p-4 w-full">
+    <div className="p-2">
+      {/* Image preview */}
       {imagePreview && (
-        <div className="mb-3 flex items-center gap-2">
-          <div className="relative">
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
-            />
-            <button
-              onClick={removeImage}
-              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-300 flex items-center justify-center"
-            >
-              <X className="size-3" />
-            </button>
+        <div className="mb-2">
+          <div className="inline-block relative">
+            <div className="relative bg-base-200/30 rounded-3xl p-3 backdrop-blur-sm border border-base-300/30">
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="w-12 h-12 object-cover rounded-2xl shadow-sm"
+              />
+              <button
+                onClick={removeImage}
+                className="absolute -top-1 -right-2 w-5 h-5 rounded-full bg-error/80 hover:bg-error text-white flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-sm"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
           </div>
         </div>
       )}
-      <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-        <div className="flex-1 flex gap-2">
+
+      {/* Input form */}
+      <form onSubmit={handleSendMessage} className="flex items-center gap-3">
+        <div className="flex-1 flex items-center gap-3 bg-base-200/40 backdrop-blur-sm rounded-3xl border border-base-300/30 p-2 hover:bg-base-200/60 transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/20">
+          {/* Text input */}
           <input
             type="text"
-            className="w-full input input-bordered rounded-lg input-sm sm:input-md"
-            placeholder="Yap..."
+            className="flex-1 bg-transparent border-none outline-none px-1 text-base placeholder:text-zinc-400 text-base-content"
+            placeholder="Type your message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
+
+          {/* File input */}
           <input
             type="file"
             accept="image/*"
@@ -99,22 +106,34 @@ const MessageInput = () => {
             ref={fileInputRef}
             onChange={handleImageChange}
           />
+
+          {/* Image upload button */}
           <button
             type="button"
-            className={`hidden sm:flex btn btn-circle ${
-              imagePreview ? "text-emerald-500" : "text-zinc-400"
+            className={`p-2 rounded-2xl transition-all duration-200 hover:scale-105 ${
+              imagePreview
+                ? "bg-primary/20 text-primary hover:bg-primary/30"
+                : "bg-base-300/40 text-zinc-400 hover:bg-primary/10 hover:text-primary"
             }`}
             onClick={() => fileInputRef.current?.click()}
+            title="Attach image"
           >
             <Image size={20} />
           </button>
         </div>
+
+        {/* Send button */}
         <button
           type="submit"
-          className="btn btn-sm btn-circle"
+          className={`p-3 rounded-2xl transition-all duration-200 hover:scale-105 shadow-sm ${
+            !text.trim() && !imagePreview
+              ? "bg-base-300/40 text-zinc-400 cursor-not-allowed"
+              : "bg-primary hover:bg-primary/80 text-primary-content shadow-primary/20"
+          }`}
           disabled={!text.trim() && !imagePreview}
+          title="Send message"
         >
-          <Send size={22} />
+          <Send size={20} />
         </button>
       </form>
     </div>
