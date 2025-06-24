@@ -1,7 +1,7 @@
 import "./index.css";
 import { useEffect } from "react";
 import Navbar from "./components/Navbar.jsx";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -16,6 +16,7 @@ import CallPage from "./pages/CallPage.jsx";
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
   const { caller, inCall, voiceChat } = useChatStore();
+  const localtion = useLocation();
 
   useEffect(() => {
     checkAuth();
@@ -30,10 +31,10 @@ const App = () => {
       </div>
     );
   }
-
+  // return <CallPage />;
   return (
     <div>
-      <Navbar />
+      {localtion.pathname === "/call" || <Navbar />}
       <Routes>
         <Route
           path="/"

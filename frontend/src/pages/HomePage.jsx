@@ -8,7 +8,8 @@ import RingingPopup from "../components/RingingPopup";
 import { useEffect } from "react";
 
 const HomePage = () => {
-  const { selectedUser, isRinging, caller, inCall, isCalling } = useChatStore();
+  const { selectedUser, isRinging, caller, inCall, isCalling, voiceCall } =
+    useChatStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,9 +19,13 @@ const HomePage = () => {
   }, [inCall]);
   return (
     <div className="h-screen bg-base-200">
-      {/* Ringing popup at the center */}
+      {/* Ringing popup */}
       {isRinging && (
-        <CallPopup profilePic={caller.profilePic} fullName={caller.fullName} />
+        <CallPopup
+          profilePic={caller.profilePic}
+          fullName={caller.fullName}
+          voice={voiceCall}
+        />
       )}
       {isCalling && <RingingPopup />}
 

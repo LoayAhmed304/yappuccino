@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useChatStore } from "../stores/useChatStore";
 
-const CallPopup = ({ profilePic, fullName }) => {
+const CallPopup = ({ profilePic, fullName, voice }) => {
   const navigate = useNavigate();
   const handleAccept = async () => {
     try {
@@ -19,8 +19,9 @@ const CallPopup = ({ profilePic, fullName }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
       <div className="bg-base-100 p-5 rounded-lg shadow-lg text-center">
-        <h2 className="text-2xl font-semibold mb-3">Incoming Call</h2>
-        {/* <PhoneCall className="w-15 h-15 mx-auto mb-5 text-primary animate-pulse" /> */}
+        <h2 className="text-2xl font-semibold mb-3">
+          Incoming {voice ? "Voice " : "Video "}Call
+        </h2>
         <img
           src={profilePic || "avatar.png"}
           className="w-60 h-60 mx-auto mb-5 rounded-full object-cover animate-pulse"
