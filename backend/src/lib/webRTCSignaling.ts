@@ -44,6 +44,6 @@ io.on("connection", (socket) => {
   });
 });
 
-serverHttp.listen(3000, () => {
+serverHttp.listen(process.env.WEBRTC_PORT ?? 3000, () => {
   console.log("[SIG] Listening on port 3000");
 });
