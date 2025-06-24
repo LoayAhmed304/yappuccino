@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useChatStore } from "../stores/useChatStore";
 import Sidebar from "../components/Sidebar";
 import NoChatSelected from "../components/NoChatSelected";
@@ -11,6 +11,25 @@ const HomePage = () => {
   const { selectedUser, isRinging, caller, inCall, isCalling, voiceCall } =
     useChatStore();
   const navigate = useNavigate();
+  const ringtoneRef = useRef(null);
+  useEffect(() => {
+    if (!ringtoneRef.current) {
+      ringtoneRef.current = new Audio("/ringtone.mp3");
+      ringtoneRef.current.loop = true;
+    }
+
+    if (isRinging) {
+      ringtoneRef.current.play().catch((e) => {
+        console.warn(
+          "Autoplay failed, user interaction required to play sound",
+          e
+        );
+      });
+    } else {
+      ringtoneRef.current.pause();
+      ringtoneRef.current.currentTime = 0;
+    }
+  }, [isRinging]);
 
   useEffect(() => {
     if (inCall) {
