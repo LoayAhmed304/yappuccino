@@ -2,6 +2,8 @@
 
 Your cozy digital cafe to yap in every possible way with your friends, securely.
 
+> Frontend design is inspired by another open-source project.
+
 ### Feel free to check both my **Medium Articles** about [WebSockets](https://medium.com/@loayahmed304/websocket-operation-d21bc3a362b4), and [WebRTC](https://medium.com/@loayahmed304/breaking-down-webrtc-44cd5c337482). Would absloutely love to hear your feedback! ❤️
 
 ---
