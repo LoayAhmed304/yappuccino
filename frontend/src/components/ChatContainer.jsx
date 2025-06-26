@@ -57,7 +57,7 @@ const ChatContainer = () => {
       </div>
       {/* Messages area */}
       <div className="flex-1 overflow-y-auto bg-gradient-to-b from-base-50/30 to-base-100/50 backdrop-blur-sm min-h-0">
-        <div className="p-6 space-y-4">
+        <div className="p-2 sm:p-4 space-y-2 sm:space-y-3">
           {messages.map((message, index) => (
             <div
               key={message._id}
@@ -69,7 +69,7 @@ const ChatContainer = () => {
               ref={index === messages.length - 1 ? messageEndRef : null}
             >
               <div
-                className={`flex items-end gap-4 max-w-[75%] ${
+                className={`flex items-end gap-1.5 sm:gap-3 max-w-[80%] sm:max-w-[75%] ${
                   message.senderId === authUser._id
                     ? "flex-row-reverse"
                     : "flex-row"
@@ -85,7 +85,7 @@ const ChatContainer = () => {
                           : selectedUser.profilePic || "/avatar.png"
                       }
                       alt="profile pic"
-                      className="size-10 object-cover rounded-2xl ring-2 ring-base-300/30 shadow-sm"
+                      className="size-6 sm:size-8 object-cover rounded-xl ring-1 ring-base-300/30 shadow-sm"
                     />
                   </div>
                 </div>
@@ -100,7 +100,7 @@ const ChatContainer = () => {
                 >
                   {/* Timestamp */}
                   <div
-                    className={`text-xs text-zinc-400 mb-2 px-1 ${
+                    className={`text-xs text-zinc-400 mb-1 px-1 ${
                       message.senderId === authUser._id
                         ? "text-right"
                         : "text-left"
@@ -117,7 +117,7 @@ const ChatContainer = () => {
                   {/* Message content */}
                   <div
                     className={`
-                    relative p-2.5 rounded-2xl shadow-sm backdrop-blur-sm border
+                    relative p-2 sm:p-2.5 rounded-xl sm:rounded-2xl shadow-sm backdrop-blur-sm border
                     transition-all duration-200 group-hover:shadow-md
                     ${
                       message.senderId === authUser._id
@@ -128,18 +128,18 @@ const ChatContainer = () => {
                   >
                     {/* Image content */}
                     {message.image && (
-                      <div className="mb-3">
+                      <div className="mb-2">
                         <img
                           src={message.image}
                           alt="Attachment"
-                          className="max-w-[100px] rounded-xl shadow-sm border border-base-300/30"
+                          className="max-w-[80px] sm:max-w-[100px] rounded-lg border border-base-300/30"
                         />
                       </div>
                     )}
 
                     {/* Text content */}
                     {message.text && (
-                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                      <p className="text-xs sm:text-sm leading-relaxed whitespace-pre-wrap">
                         {message.text}
                       </p>
                     )}
