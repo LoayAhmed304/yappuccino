@@ -8,7 +8,8 @@ const app = express();
 const serverHttp = http.createServer(app);
 
 const io = new Server(serverHttp, {
-  cors: {
+path:"/rtc/socket.io",
+      	cors: {
     origin: [process.env.FRONTEND_URL ?? "http://localhost:5173"],
   },
 });

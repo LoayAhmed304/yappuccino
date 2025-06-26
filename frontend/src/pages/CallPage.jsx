@@ -19,10 +19,14 @@ const CallPage = ({ fullName, profilePic, voice }) => {
 
   useEffect(() => {
     const localElement = document.getElementById("localElement");
-    if (localElement && localStream) localElement.srcObject = localStream;
+    if (localElement && localStream) {
+      localElement.srcObject = localStream;
+    }
 
     const remoteElement = document.getElementById("remoteElement");
-    if (remoteElement && remoteStream) remoteElement.srcObject = remoteStream;
+    if (remoteElement && remoteStream) {
+      remoteElement.srcObject = remoteStream;
+    }
   }, [localStream, remoteStream]);
 
   useEffect(() => {
@@ -40,26 +44,22 @@ const CallPage = ({ fullName, profilePic, voice }) => {
         <video
           id="remoteElement"
           autoPlay
-          className={"w-full h-full object-cover" + (voice ? " hidden" : "")}
+          className={`w-full h-full object-cover${voice ? " hidden" : ""}`}
         ></video>
-
         <video
           id="localElement"
           autoPlay
           muted
-          className={
-            "absolute bottom-4 right-4 w-32 h-20 sm:w-40 sm:h-24 md:w-52 md:h-32 rounded border-2 border-white shadow-md object-cover z-10" +
-            voice
-              ? " hidden"
-              : ""
-          }
+          className={`absolute bottom-4 right-4 w-32 h-20 sm:w-40 sm:h-24 md:w-52 md:h-32 rounded border-2 border-white shadow-md object-cover z-10${
+            voice ? " hidden" : ""
+          }`}
         ></video>
 
         {/* Voice Call */}
         {voice && (
           <div className="flex flex-col items-center justify-center text-white space-y-4">
             <img
-              src={profilePic}
+              src={profilePic || "/avatar.png"}
               alt={fullName}
               className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white shadow-lg object-cover"
             />
@@ -89,3 +89,4 @@ const CallPage = ({ fullName, profilePic, voice }) => {
 };
 
 export default CallPage;
+
