@@ -92,7 +92,8 @@ const HomePage = () => {
 
               <div>
                 <h1 className="text-base sm:text-lg lg:text-xl font-bold text-base-content mb-0 sm:mb-1 text-center">
-                  Yapping Area
+                  🔒 All chat messages are encrypted in the database. You can
+                  yap freely and securely.
                 </h1>
               </div>
 
