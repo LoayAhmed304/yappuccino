@@ -206,10 +206,12 @@ export const useChatStore = create((set, get) => ({
       );
       return;
     }
-    const ss = io(SIG_URL, { query: { userId: authUser._id }, path: "/rtc/socket.io" });
-	  console.log("connecting to URL: ", SIG_URL);
-	  toast.error("connecting to URL: "+ SIG_URL);
-   ss.connect(); 
+    const ss = io(SIG_URL, {
+      query: { userId: authUser._id },
+      path: "/rtc/socket.io",
+    });
+
+    ss.connect();
 
     ss.on("call-ended", () => {
       get().cleanupCall();
