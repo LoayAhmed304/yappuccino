@@ -32,6 +32,7 @@ const App = () => {
     );
   }
   // return <CallPage />;
+console.log("new console log from APP");
   return (
     <div>
       {localtion.pathname === "/call" || <Navbar />}
