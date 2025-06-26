@@ -37,7 +37,7 @@ const CallPage = ({ fullName, profilePic, voice }) => {
   }, [peerConnection]);
 
   return (
-    <div className="w-full h-[calc(100vh-2rem)] flex items-center justify-center px-4 py-6 mt-5">
+    <div className="w-full h-[calc(100vh-2rem)] flex flex-col items-center justify-center px-4 py-6 mt-5">
       <div className="relative w-full max-w-6xl md:h-140 aspect-video bg-black rounded-lg shadow-lg overflow-clip flex items-center justify-center">
         {/* Video Call */}
 
@@ -69,12 +69,13 @@ const CallPage = ({ fullName, profilePic, voice }) => {
           </div>
         )}
 
-        <div className="absolute inset-0 flex justify-center items-end pb-4 opacity-0 hover:opacity-100 transition-opacity z-20">
+        {/* Hang up button - Desktop */}
+        <div className="hidden sm:flex absolute inset-0 justify-center items-end pb-4 opacity-0 hover:opacity-100 transition-opacity z-20">
           <button
             className="btn btn-error text-white shadow-lg"
             onClick={handleEndCall}
           >
-            <PhoneOff className="size-5 sm:size-6" />
+            <PhoneOff className="size-6" />
           </button>
         </div>
 
@@ -84,9 +85,19 @@ const CallPage = ({ fullName, profilePic, voice }) => {
           </div>
         )}
       </div>
+
+      {/* Hang up button - Mobile */}
+      <div className="sm:hidden mt-6">
+        <button
+          className="btn btn-error text-white shadow-lg px-8 py-3"
+          onClick={handleEndCall}
+        >
+          <PhoneOff className="size-5 mr-2" />
+          End Call
+        </button>
+      </div>
     </div>
   );
 };
 
 export default CallPage;
-
