@@ -4,6 +4,7 @@ import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
 import { Request, Response } from "express";
 import { getReceiverSocketId, io } from "../lib/socket.js";
+import { encryptMessage, decryptMessage } from "../lib/utils.js";
 
 export const getSidebarUsers = async (req: Request, res: Response) => {
   try {
@@ -55,9 +56,14 @@ export const getMessages = async (req: Request, res: Response) => {
       ],
     });
 
+    const decryptedMessages = messages.map((msg) => ({
+      ...msg.toObject(),
+      text: msg.text ? decryptMessage(msg.text) : null,
+    }));
+
     res.status(200).json({
       status: "success",
-      data: { messages },
+      data: { messages: decryptedMessages },
     });
   } catch (err) {
     console.log(err);
@@ -79,10 +85,11 @@ export const sendMessage = async (req: Request, res: Response) => {
       const response = await cloudinary.uploader.upload(image);
       imageUrl = response.secure_url;
     }
+    const encryptedText = text ? encryptMessage(text) : null;
     const newMessage = new Message({
       senderId,
       receiverId,
-      text,
+      text: encryptedText,
       image: imageUrl,
     });
     await newMessage.save();
@@ -91,15 +98,22 @@ export const sendMessage = async (req: Request, res: Response) => {
     const receiverSocketId = getReceiverSocketId(receiverId);
     console.log(`Receiver Socket ID: ${receiverSocketId}`);
     if (receiverSocketId) {
-      // Emit the new message to the receiver
-      io.to(receiverSocketId).emit("newMessage", newMessage);
+      io.to(receiverSocketId).emit("newMessage", {
+        ...newMessage.toObject(),
+        text: decryptMessage(newMessage.text ?? ""),
+      });
     } else {
       console.log(`No socket found for receiver ID: ${receiverId}`);
     }
 
     res.status(201).json({
       status: "success",
-      data: { newMessage },
+      data: {
+        newMessage: {
+          ...newMessage.toObject(),
+          text: decryptMessage(newMessage.text ?? ""),
+        },
+      },
     });
   } catch (err) {
     console.log(err);
