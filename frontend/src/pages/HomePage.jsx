@@ -54,9 +54,6 @@ const HomePage = () => {
     }
   }, [isRinging]);
 
-  const ringtoneRef = useRef(null);
-  const calltoneRef = useRef(null);
-
   useEffect(() => {
     if (!calltoneRef.current) {
       calltoneRef.current = new Audio("/outgoingtone.mp3");
