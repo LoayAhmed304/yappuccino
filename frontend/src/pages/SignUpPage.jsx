@@ -61,7 +61,7 @@ const SignUpPage = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Full Name</span>
+                <span className="label-text">Full Name (will be visible to all users)</span>
               </label>
               <div className="relative">
                 <input
