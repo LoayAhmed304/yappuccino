@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
       watch: {
         usePolling: true,
       },
-	    allowedHosts: ['yappuccino.loay.work']
+      allowedHosts: ["yappuccino.loay.work"],
     },
   };
 });
