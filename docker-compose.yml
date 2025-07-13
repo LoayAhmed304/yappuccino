@@ -19,16 +19,7 @@ services:
       - "3000:3000"
     depends_on:
       - mongodb
-    environment:
-      - PORT=3535
-      - WEBRTC_PORT=3000
-      - MONGODB_URI=mongodb://admin:password@mongodb:27017/?authSource=admin
-      - FRONTEND_URL=http://localhost:5173
-      - JWT_SECRET=YOUR_JWT_SECRET
-      - CLOUDINARY_CLOUD_NAME=your_cloud_name
-      - CLOUDINARY_API_KEY=your_api_key
-      - CLOUDINARY_API_SECRET=your_secret
-      - ENCRYPTION_KEY=your_encryption_key
+    env_file: "./backend/.env"
 
   frontend:
     container_name: yap-frontend
@@ -37,11 +28,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
-    environment:
-      - VITE_SIGNALING_URL=http://localhost:3000
-      - VITE_API_URL=http://localhost:3535
-      - CHOKIDAR_USEPOLLING=true
-      - VITE_PORT=5173
+    env_file: "./frontend/.env"
 
 volumes:
   yap_mongo_data:
