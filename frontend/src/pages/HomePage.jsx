@@ -54,46 +54,6 @@ const HomePage = () => {
     }
   }, [isRinging]);
 
-  const ringtoneRef = useRef(null);
-  const calltoneRef = useRef(null);
-
-  useEffect(() => {
-    if (!calltoneRef.current) {
-      calltoneRef.current = new Audio("/outgoingtone.mp3");
-      calltoneRef.current.loop = true;
-    }
-    if (isCalling) {
-      calltoneRef.current.play().catch((e) => {
-        console.warn(
-          "Autoplay failed, user interaction required to play sound",
-          e
-        );
-      });
-    } else {
-      calltoneRef.current.pause();
-      calltoneRef.current.currentTime = 0;
-    }
-  }, [isCalling]);
-
-  useEffect(() => {
-    if (!ringtoneRef.current) {
-      ringtoneRef.current = new Audio("/ringtone.mp3");
-      ringtoneRef.current.loop = true;
-    }
-
-    if (isRinging) {
-      ringtoneRef.current.play().catch((e) => {
-        console.warn(
-          "Autoplay failed, user interaction required to play sound",
-          e
-        );
-      });
-    } else {
-      ringtoneRef.current.pause();
-      ringtoneRef.current.currentTime = 0;
-    }
-  }, [isRinging]);
-
   useEffect(() => {
     if (inCall) {
       navigate("/call");
