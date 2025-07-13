@@ -17,8 +17,3 @@ services:
     ports:
       - "9999:80"
     env_file: "./frontend/.env.prod"
-
-volumes:
-  yap_mongo_data:
-    driver: local
-
