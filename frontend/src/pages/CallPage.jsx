@@ -37,41 +37,22 @@ const CallPage = ({ fullName, profilePic, voice }) => {
   }, [peerConnection]);
 
   return (
-<<<<<<< HEAD
-    <div className="w-full h-[calc(100vh-2rem)] flex items-center justify-center px-4 py-6 mt-5">
-=======
     <div className="w-full h-[calc(100vh-2rem)] flex flex-col items-center justify-center px-4 py-6 mt-5">
->>>>>>> 42a69b1288a95652d2f186f6200bed914860c252
       <div className="relative w-full max-w-6xl md:h-140 aspect-video bg-black rounded-lg shadow-lg overflow-clip flex items-center justify-center">
         {/* Video Call */}
 
         <video
           id="remoteElement"
           autoPlay
-<<<<<<< HEAD
-          className={"w-full h-full object-cover" + (voice ? " hidden" : "")}
-        ></video>
-
-=======
           className={`w-full h-full object-cover${voice ? " hidden" : ""}`}
         ></video>
->>>>>>> 42a69b1288a95652d2f186f6200bed914860c252
         <video
           id="localElement"
           autoPlay
           muted
-<<<<<<< HEAD
-          className={
-            "absolute bottom-4 right-4 w-32 h-20 sm:w-40 sm:h-24 md:w-52 md:h-32 rounded border-2 border-white shadow-md object-cover z-10" +
-            voice
-              ? " hidden"
-              : ""
-          }
-=======
           className={`absolute bottom-4 right-4 w-32 h-20 sm:w-40 sm:h-24 md:w-52 md:h-32 rounded border-2 border-white shadow-md object-cover z-10${
             voice ? " hidden" : ""
           }`}
->>>>>>> 42a69b1288a95652d2f186f6200bed914860c252
         ></video>
 
         {/* Voice Call */}
