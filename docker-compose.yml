@@ -2,14 +2,12 @@ version: "3"
 services:
   mongodb:
     container_name: yap-mongodb
-    image: mongo:latest
-    ports:
-      - "27018:27017"
+    image: mongo:8.0-noble
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
-      - mongo_data:/data/db
+      - yap_mongo_data:/data/db
 
   backend:
     container_name: yap-backend
@@ -21,15 +19,7 @@ services:
       - "3000:3000"
     depends_on:
       - mongodb
-    environment:
-      - PORT=3535
-      - WEBRTC_PORT=3000
-      - MONGODB_URI=mongodb://admin:password@mongodb:27017/?authSource=admin
-      - FRONTEND_URL=http://localhost:5173
-      - JWT_SECRET=your_jwt_secret
-      - CLOUDINARY_CLOUD_NAME=your_cloud_name
-      - CLOUDINARY_API_KEY=api_key
-      - CLOUDINARY_API_SECRET=your_secret
+    env_file: "./backend/.env"
 
   frontend:
     container_name: yap-frontend
@@ -38,11 +28,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
-    environment:
-      - VITE_SIGNALING_URL=http://localhost:3000
-      - VITE_BACKEND_URL=http://localhost:3535
-      - CHOKIDAR_USEPOLLING=true
+    env_file: "./frontend/.env"
 
 volumes:
-  mongo_data:
+  yap_mongo_data:
     driver: local

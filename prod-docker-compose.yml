@@ -1,0 +1,19 @@
+version: "3"
+services:
+  backend:
+    container_name: yap-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "4545:3535"
+      - "4000:3000"
+    env_file: "./backend/.env.prod"
+  frontend:
+    container_name: yap-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    ports:
+      - "9999:80"
+    env_file: "./frontend/.env.prod"

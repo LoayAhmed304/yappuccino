@@ -64,35 +64,37 @@ const MessageInput = () => {
     }
   };
   return (
-    <div className="p-2">
+    <div className="p-1.5 sm:p-2">
       {/* Image preview */}
       {imagePreview && (
         <div className="mb-2">
           <div className="inline-block relative">
-            <div className="relative bg-base-200/30 rounded-3xl p-3 backdrop-blur-sm border border-base-300/30">
+            <div className="relative bg-base-200/30 rounded-2xl p-2 backdrop-blur-sm border border-base-300/30">
               <img
                 src={imagePreview}
                 alt="Preview"
-                className="w-12 h-12 object-cover rounded-2xl shadow-sm"
+                className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-xl shadow-sm"
               />
               <button
                 onClick={removeImage}
-                className="absolute -top-1 -right-2 w-5 h-5 rounded-full bg-error/80 hover:bg-error text-white flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-sm"
+                className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-error/80 hover:bg-error text-white flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-sm"
               >
                 <X className="size-4" />
               </button>
             </div>
           </div>
         </div>
-      )}
-
+      )}{" "}
       {/* Input form */}
-      <form onSubmit={handleSendMessage} className="flex items-center gap-3">
-        <div className="flex-1 flex items-center gap-3 bg-base-200/40 backdrop-blur-sm rounded-3xl border border-base-300/30 p-2 hover:bg-base-200/60 transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/20">
+      <form
+        onSubmit={handleSendMessage}
+        className="flex items-center gap-2 sm:gap-3"
+      >
+        <div className="flex-1 flex items-center gap-2 bg-base-200/40 backdrop-blur-sm rounded-2xl border border-base-300/30 p-1.5 sm:p-2 hover:bg-base-200/60 transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/20">
           {/* Text input */}
           <input
             type="text"
-            className="flex-1 bg-transparent border-none outline-none px-1 text-base placeholder:text-zinc-400 text-base-content"
+            className="flex-1 bg-transparent border-none outline-none px-1 text-sm sm:text-base placeholder:text-zinc-400 text-base-content"
             placeholder="Type your message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -110,7 +112,7 @@ const MessageInput = () => {
           {/* Image upload button */}
           <button
             type="button"
-            className={`p-2 rounded-2xl transition-all duration-200 hover:scale-105 ${
+            className={`p-1.5 rounded-xl transition-all duration-200 hover:scale-105 ${
               imagePreview
                 ? "bg-primary/20 text-primary hover:bg-primary/30"
                 : "bg-base-300/40 text-zinc-400 hover:bg-primary/10 hover:text-primary"
@@ -118,14 +120,14 @@ const MessageInput = () => {
             onClick={() => fileInputRef.current?.click()}
             title="Attach image"
           >
-            <Image size={20} />
+            <Image size={16} className="sm:w-5 sm:h-5" />
           </button>
         </div>
 
         {/* Send button */}
         <button
           type="submit"
-          className={`p-3 rounded-2xl transition-all duration-200 hover:scale-105 shadow-sm ${
+          className={`p-2 sm:p-2.5 rounded-xl transition-all duration-200 hover:scale-105 shadow-sm ${
             !text.trim() && !imagePreview
               ? "bg-base-300/40 text-zinc-400 cursor-not-allowed"
               : "bg-primary hover:bg-primary/80 text-primary-content shadow-primary/20"
@@ -133,7 +135,7 @@ const MessageInput = () => {
           disabled={!text.trim() && !imagePreview}
           title="Send message"
         >
-          <Send size={20} />
+          <Send size={16} className="sm:w-5 sm:h-5" />
         </button>
       </form>
     </div>

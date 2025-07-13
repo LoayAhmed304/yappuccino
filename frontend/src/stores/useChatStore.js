@@ -206,7 +206,11 @@ export const useChatStore = create((set, get) => ({
       );
       return;
     }
-    const ss = io(SIG_URL, { query: { userId: authUser._id } });
+    const ss = io(SIG_URL, {
+      query: { userId: authUser._id },
+      path: "/rtc/socket.io",
+    });
+
     ss.connect();
 
     ss.on("call-ended", () => {
