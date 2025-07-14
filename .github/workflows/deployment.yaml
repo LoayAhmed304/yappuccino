@@ -1,5 +1,5 @@
 name: Deployment Workflow
-run-name: Deploying for commit number ${{ github.sha }}
+run-name: Deploying for commit number ${{ github.event.head_commit.message }}
 on:
   push:
     branches: [main]
