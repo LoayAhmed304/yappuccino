@@ -4,7 +4,7 @@ services:
     container_name: yap-backend
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     ports:
       - "4545:3535"
       - "4000:3000"

@@ -3,6 +3,13 @@ run-name: Deploying for commit number ${{ github.sha }}
 on:
   push:
     branches: [main]
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - prod-docker-compose.yml
+    paths-ignore:
+      - frontend/Dockerfile
+      - backend/Dockerfile
   workflow_dispatch:
 
 jobs:

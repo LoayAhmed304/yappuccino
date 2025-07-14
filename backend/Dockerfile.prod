@@ -1,0 +1,21 @@
+FROM node:22-alpine AS build-stage
+
+RUN mkdir -p /home/app
+WORKDIR /home/app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+FROM node:22-alpine
+
+WORKDIR /home/app
+
+COPY --from=build-stage /home/app/package*.json ./
+COPY --from=build-stage /home/app/dist ./dist
+COPY --from=build-stage /home/app/node_modules ./node_modules
+
+CMD ["node", "dist/index.js"]
