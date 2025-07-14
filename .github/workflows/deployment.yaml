@@ -1,0 +1,28 @@
+name: Deployment Workflow
+run-name: Deploying for commit number ${{ github.sha }}
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deployment:
+    runs-on: self-hosted
+    steps:
+      - name: Mark repo as safe
+        run: git config --global --add safe.directory /var/www/yappuccino
+
+      - name: Pull new code
+        working-directory: /var/www/yappuccino
+        run: git pull origin main
+
+      - name: Down services
+        working-directory: /var/www/yappuccino
+        run: docker compose -f prod-docker-compose.yml down
+
+      - name: Run services again
+        working-directory: /var/www/yappuccino
+        run: docker compose -f prod-docker-compose.yml up --build -d
+
+      - name: Show running containers
+        run: docker ps

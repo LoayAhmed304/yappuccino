@@ -13,4 +13,6 @@ FROM nginx:stable-alpine
 
 COPY --from=build-stage /home/app/dist /usr/share/nginx/html
 
+COPY ./default.conf /etc/nginx/conf.d/default.conf
+
 CMD ["nginx", "-g", "daemon off;"]
