@@ -6,10 +6,9 @@ on:
     paths:
       - "backend/**"
       - "frontend/**"
-      - prod-docker-compose.yml
-    paths-ignore:
-      - frontend/Dockerfile
-      - backend/Dockerfile
+      - "!frontend/Dockerfile"
+      - "!backend/Dockerfile"
+      - "prod-docker-compose.yml"
   workflow_dispatch:
 
 jobs:
