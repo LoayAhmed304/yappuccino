@@ -9,7 +9,7 @@ on:
       - "!frontend/Dockerfile"
       - "!backend/Dockerfile"
       - "prod-docker-compose.yml"
-      - ".github"
+      - ".github/**"
   workflow_dispatch:
 
 jobs:
