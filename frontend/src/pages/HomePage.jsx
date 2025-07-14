@@ -53,7 +53,7 @@ const HomePage = () => {
       ringtoneRef.current.currentTime = 0;
     }
   }, [isRinging]);
-
+  
   useEffect(() => {
     if (inCall) {
       navigate("/call");
