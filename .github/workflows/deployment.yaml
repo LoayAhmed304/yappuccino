@@ -2,7 +2,7 @@ name: Deployment Workflow
 run-name: Deploying for commit number ${{ github.sha }}
 on:
   push:
-    branches: [main]
+    branches: [chore/do-deploy]
   workflow_dispatch:
 
 jobs:
